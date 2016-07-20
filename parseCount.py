@@ -45,12 +45,10 @@ def count_hedges(hedges, g):		#g is a grid object
 
 
 hedges = parse_hedges(FILENAME)
-print(len(hedges))
-print(hedges[-1].ID)
 g = grid()
 
 count_hedges(hedges, g)
-g.render_grid()
-print()
-print()
-g.render_grid(True)
+g.output_grid("output.txt")
+print
+print
+g.output_grid("output.txt",True)

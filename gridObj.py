@@ -30,7 +30,7 @@ class grid():
                         self.negRegs += 1
 
                         
-	def square_report(self, h, t, percentage=False):
+        def square_report(self, h, t, percentage=False):                             #returns the number of hedges with h nodes in the head and t nodes in the tail. if percentage is set to True, it gives the number as a percentage
                 if percentage == True:
                         total_hedges = self.grid_total()
                         p_of_total = (self.ht_ls[h-1][t-1] / float(total_hedges))*100
@@ -46,7 +46,7 @@ class grid():
                                 total += item
                 return total
         
-	def render_grid(self, p=False):				#renders a string representation of the grid in the command prompt (it's not well aligned right now but it gets the point across)
+	def str_grid(self, p=False):				#returns a string representation of the grid. If p is set to True it gives the numbers as percentages.
 		grid_str = "   t: \t 1 \t 2 \t >2 \n" + "h: \n"
 		i = 1
 		for row in self.ht_ls:
@@ -64,19 +64,12 @@ class grid():
                 grid_str += "Positively Regulated Hedges: " + str(self.posRegs) + " (" + str("%.1f" % (100 * self.posRegs / float(self.grid_total()))) + "%) \n"
                 grid_str += "Negatively Regulated Hedges: " + str(self.negRegs) + " (" +  str("%.1f" % (100 * self.negRegs / float(self.grid_total()))) + "%) \n"
                 grid_str += "\n" + "TOTAL HEDGES: " + str(self.grid_total())
-		print(grid_str)
+		return grid_str
 
 
+        def output_grid(self, filename, p=False):
+                with open(filename, 'a') as f:
+                        f.write(self.str_grid(p))
 
-
-
-#random testing stuff below
-g = grid()
-for i in range(50):
-	g.grid_inc(1,1)
-
-for i in range(500):
-	g.grid_inc(2,1)
-	g.grid_inc(5,2)
-
-g.render_grid()
+        def render_grid(self, p=False):                 #renders str_grid in command prompt. If p is set to True it gives the numbers as percentages.
+                print(self.str_grid(p))
