@@ -43,3 +43,6 @@ g = grid()
 
 count_hedges(hedges, g)
 g.render_grid()
+print()
+print()
+g.render_grid(True)
