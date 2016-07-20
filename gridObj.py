@@ -4,6 +4,8 @@
 class grid():
 	def __init__(self):
 		self.ht_ls = self.makeGrid(3,3)
+                self.posRegs = 0
+                self.negRegs = 0
 		#other information such as statistics about regulation may be included here
 		
 	def makeGrid(self,r,c):
@@ -15,13 +17,19 @@ class grid():
 				r.append(0)
 		return rows
 		
-	def grid_inc(self,h,t):	
+	def grid_inc(self,h,t,pR=0,nR=0):	
 		if h >= 3:
 			h = 3
 		if t >= 3:
 			t = 3						#because the entries in the grid are going to be 1, 2, >2
 		self.ht_ls[h-1][t-1] += 1		#ht_ls will be the list of lists that contains all the numbers in the grid, the -1 is because [0,0] is actually the 1 head 1 tail box
 
+                if pR == 1:
+                        self.posRegs += 1
+                if nR == 1:
+                        self.negRegs += 1
+
+                        
 	def square_report(self, h, t, percentage=False):
                 if percentage == True:
                         total_hedges = self.grid_total()
@@ -51,6 +59,10 @@ class grid():
                                 row_str = string_i + " \t " + str("%.1f" % self.square_report(i,1,True)) + " \t " + str("%.1f" % self.square_report(i,2,True)) + " \t " + str("%.1f" % self.square_report(i,3,True)) + " \n"
 			grid_str = grid_str + row_str
 			i += 1
+
+                grid_str += "\n"
+                grid_str += "Positively Regulated Hedges: " + str(self.posRegs) + " (" + str("%.1f" % (100 * self.posRegs / float(self.grid_total()))) + "%) \n"
+                grid_str += "Negatively Regulated Hedges: " + str(self.negRegs) + " (" +  str("%.1f" % (100 * self.negRegs / float(self.grid_total()))) + "%) \n"
                 grid_str += "\n" + "TOTAL HEDGES: " + str(self.grid_total())
 		print(grid_str)
 

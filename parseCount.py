@@ -32,8 +32,16 @@ def count_hedges(hedges, g):		#g is a grid object
 	for h in hedges:
 		curr_heads = len(h.head_ls)
 		curr_tails = len(h.tail_ls)
-		#whatever else i want to count about the hedges can also be included here
-		g.grid_inc(curr_heads, curr_tails)		
+                if h.posReg[0] == "None":
+                        pR = 0
+                else:
+                        pR = 1
+                if h.negReg[0] == "None":
+                        nR = 0
+                else:
+                        nR = 1
+                
+		g.grid_inc(curr_heads, curr_tails, pR, nR)		
 
 
 hedges = parse_hedges(FILENAME)
