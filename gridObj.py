@@ -26,13 +26,13 @@ class grid():
 		return self.ht_ls[h-1][t-1]
 	
 	def render_grid(self):				#renders a string representation of the grid in the command prompt (it's not well aligned right now but it gets the point across)
-		grid_str = "   t:   1   2   >2   \n" + "h: \n"
+		grid_str = "   t: \t 1 \t 2 \t >2 \n" + "h: \n"
 		i = 1
 		for row in self.ht_ls:
 			string_i = str(i)
 			if i == 3:
 				string_i = ">2"
-			row_str = string_i + "       " + str(self.square_report(i,1)) + "   " + str(self.square_report(i,2)) + "   " + str(self.square_report(i,3)) + " \n"
+			row_str = string_i + " \t " + str(self.square_report(i,1)) + " \t " + str(self.square_report(i,2)) + " \t " + str(self.square_report(i,3)) + " \n"
 			grid_str = grid_str + row_str
 			i += 1
 		print(grid_str)
