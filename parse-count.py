@@ -39,3 +39,7 @@ def count_hedges(hedges, g):		#g is a grid object
 hedges = parse_hedges(FILENAME)
 print(len(hedges))
 print(hedges[-1].ID)
+g = grid()
+
+count_hedges(hedges, g)
+g.render_grid()
