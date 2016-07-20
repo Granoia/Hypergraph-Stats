@@ -1,3 +1,5 @@
+from gridObj import *
+
 FILENAME = "/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt"
 
 def parse_hedges(file):
@@ -16,7 +18,7 @@ def parse_hedges(file):
 	return hedges_ls
 
 
-class hedge():
+class hedge():			#simple class to organize the data in a hyperedge
 	def __init__(self,head,tail,posReg,negReg,ID,pathways):
 		self.head_ls = head
 		self.tail_ls = tail
@@ -24,6 +26,15 @@ class hedge():
 		self.negReg = negReg
 		self.ID = ID
 		self.pathways = pathways
+
+		
+def count_hedges(hedges, g):		#g is a grid object
+	for h in hedges:
+		curr_heads = len(h.head_ls)
+		curr_tails = len(h.tail_ls)
+		#whatever else i want to count about the hedges can also be included here
+		g.grid_inc(curr_heads, curr_tails)		
+
 
 hedges = parse_hedges(FILENAME)
 print(len(hedges))
