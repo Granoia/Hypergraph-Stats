@@ -1,5 +1,7 @@
+FILENAME = "/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt"
+
 def parse_hedges(file):
-	hedges = [] 		#list of hedge objects
+	hedges_ls = [] 		#list of hedge objects
 	with open(file, 'r') as f:
 		f.readline()
 		for line in f.readlines():
@@ -11,7 +13,7 @@ def parse_hedges(file):
 			ID = h_ls[4]
 			pathways = h_ls[5].split(";")
 			hedges_ls.append(hedge(heads,tails,posReg,negReg,ID,pathways))
-	return hedges
+	return hedges_ls
 
 
 class hedge():
@@ -22,3 +24,7 @@ class hedge():
 		self.negReg = negReg
 		self.ID = ID
 		self.pathways = pathways
+
+hedges = parse_hedges(FILENAME)
+print(len(hedges))
+print(hedges[-1].ID)
