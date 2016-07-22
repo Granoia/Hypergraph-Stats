@@ -27,29 +27,29 @@ class node():                    #node objects for the graph G. they know who th
 	
 
 def populate_nodes(node_ls, hedge_ls):     #attaches the node objects together using a list of hedges (which can be obtained using a function in parseCount.py). In doing so converts the hypergraph back to a standard graph.
-        weird_errors = 0
-        for hedge in hedge_ls:
+	weird_errors = 0
+	for hedge in hedge_ls:
 		for t in hedge.tail_ls:
-                        if t == None:
-                                print("Error! t is None for some reason")
-			t_node = binary_search_names(node_ls, t)
-			if t_node == None:
-				#print("Error in t search! node: " + t + " not found in node_ls!")
-                                #print(t)
-                                weird_errors += 1
-			else:
-				for h in hedge.head_ls:
-                                        if h == None:
-                                                print("Error! h is None for some reason")
-					h_node = binary_search_names(node_ls, h)
-					if h_node == None:
-						print("Error in h search! node: " + h + " not found in node_ls!")
-					else:
-						t_node.exits.append(h_node)
-						t_node.adj_nodes.append(h_node)
-						h_node.entrances.append(t_node)
-						h_node.adj_nodes.append(t_node)
-        print("that weird error happened " + str(weird_errors) + " times")
+			if t == None:
+				print("Error! t is None for some reason")
+		t_node = binary_search_names(node_ls, t)
+		if t_node == None:
+			#print("Error in t search! node: " + t + " not found in node_ls!")
+			#print(t)
+			weird_errors += 1
+		else:
+			for h in hedge.head_ls:
+				if h == None:
+					print("Error! h is None for some reason")
+				h_node = binary_search_names(node_ls, h)
+				if h_node == None:
+					print("Error in h search! node: " + h + " not found in node_ls!")
+				else:
+					t_node.exits.append(h_node)
+					t_node.adj_nodes.append(h_node)
+					h_node.entrances.append(t_node)
+					h_node.adj_nodes.append(t_node)
+	print("that weird error happened " + str(weird_errors) + " times")
 
 
 def binary_search_names(ls, target, start=0, end=None):
@@ -67,7 +67,7 @@ def binary_search_names(ls, target, start=0, end=None):
 		return binary_search_names(ls, target, start, mid)
 
 
-
+"""
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
 
 nodes = parse_nodes(FILENAME)
@@ -76,13 +76,15 @@ populate_nodes(nodes, hedges)
 print("total nodes: " + str(len(nodes)))
 
 def count_disconnected(nodes):
-        i = 0
-        for n in nodes:
-                if n.adj_nodes == []:
-                        i += 1
-        return i
+	i = 0
+	for n in nodes:
+		if n.adj_nodes == []:
+			i += 1
+	return i
 
 print("nodes with no edges: " + str(count_disconnected(nodes)))
+"""
+
 
 """
 test = []
@@ -94,11 +96,11 @@ test.append(node("c"))
 test.append(node("z"))
 
 def print_test(ls):
-        str = ""
-        for n in ls:
-                str += n.name + " "
-        print(str)
-        print
+		str = ""
+		for n in ls:
+				str += n.name + " "
+		print(str)
+		print
 
 print_test(test)
 
