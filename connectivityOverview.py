@@ -4,8 +4,10 @@ connectivity overview
 part 1: parse & make node objects -> populate adjacency with edges
 """
 
+FILENAME = "/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt"
 
-def parse_nodes(filename):
+
+def parse_nodes(filename):      #extracts information from the list of hypernodes and puts them into node objects. Right now it only actually uses the names of the nodes.
 	node_ls = []
 	with open(filename, 'r') as file:
 		file.readline()
@@ -15,7 +17,7 @@ def parse_nodes(filename):
 	node_ls.sort(key = lambda n: n.name, reverse = True)
 	return node_ls
 
-class node():
+class node():                    #node objects for the graph G. they know who they are adjacent to and whether they are in a fragment
 	def __init__(self, name):
 		self.name = name
 		self.entrances = None
@@ -26,24 +28,46 @@ class node():
 		in_frag = None
 	
 
-def populate_nodes(node_ls, hedge_ls):
+def populate_nodes(node_ls, hedge_ls):     #attaches the node objects together using a list of hedges (which can be obtained using a function in parseCount.py). In doing so converts the hypergraph back to a standard graph.
 	for hedge in hedge_ls:
 		for t in hedge.tails:
-			t_node = binary search for t in node_ls			#need to implement a binary search by name attribute of node
-			for h in hedge.heads:
-				h_node = binary search for h in node_ls
-				t_node.exits.append(h_node)
-				t_node.adj_nodes.append(h_node)
-				d_node.entrances.append(t_node)
-				d_node.adj_nodes.append(t_node)
+			t_node = binary_search_names(node_ls, t)
+			if t_node == None:
+				print("Error! node: " + t + " not found in node_ls!")
+			else:
+				for h in hedge.heads:
+					h_node = binary_search_names(node_ls, h)
+					if h_node == None:
+						print("Error! node: " + h + " not found in node_ls!")
+					else:
+						t_node.exits.append(h_node)
+						t_node.adj_nodes.append(h_node)
+						d_node.entrances.append(t_node)
+						d_node.adj_nodes.append(t_node)
+
+				
+def binary_search_names(ls, target, start=0, end=None):
+	if end == None:
+		end = len(ls)
+
+	mid = floor((end+start)/2)
+	if ls[mid].name == target:
+		return ls[mid]
+	elif start == end:
+		return None
+	elif ls[mid].name < target:
+		return binary_search(ls, , mid+1, end)
+	elif ls[mid].name > target:
+		return binary_search(ls, target, start, mid)
+
 
 
 
 """
-part 2: probe connectivity of the graph using BFS, determine how many connected fragments are in the graph
+part 2: probe connectivity of the graph using BFS, determine how many connected subgraphs are in the graph
 """
 
-def find_frags(G):
+def find_frags(G):           #this function will use BFS to find out how many connected subgraphs are in G (ignoring edge directionality). It will compile these into a returned list of fragment objects.
 	frags=[]
 	for node in G:
 		if node.in_frag == None:
@@ -51,8 +75,8 @@ def find_frags(G):
 	return frags
 
 
-def frag_BFS(G,root):         #G is the populated list of node objects, root is where the BFS will start
-	frag_ls=[root]
+def frag_BFS(G,root):         #G is the populated list of node objects, root is where the BFS will start. This function will do a breadth first search (ignoring edge directionality)
+	frag_ls=[root]            #starting from root and compile each node reached this way into a returned fragment object.
 	Q = queue()
 	root.distance = 0
 	Q.enqueue(root)
@@ -68,7 +92,7 @@ def frag_BFS(G,root):         #G is the populated list of node objects, root is 
 	new_frag = fragment(frag_ls)
 	return new_frag
 
-class fragment():
+class fragment():               #a fragment object catalogues a single connected subgraph in G
 	def __init__(self,nodes):
 		self.node_ls = nodes
 		self.size = len(nodes)
