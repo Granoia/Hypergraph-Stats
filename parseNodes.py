@@ -21,9 +21,9 @@ class node():                    #node objects for the graph G. they know who th
 		self.entrances = []
 		self.exits = []
 		self.adj_nodes = []
-		distance = -1
-		parent = None
-		in_frag = None
+		self.distance = -1
+		self.parent = None
+		self.in_frag = None
 	
 
 def populate_nodes(node_ls, hedge_ls):     #attaches the node objects together using a list of hedges (which can be obtained using a function in parseCount.py). In doing so converts the hypergraph back to a standard graph.

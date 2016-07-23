@@ -1,5 +1,6 @@
 import parseNodes
 import parseCount
+from statistics import *
 
 def find_frags(G):           #this function will use BFS to find out how many connected subgraphs are in G (ignoring edge directionality). It will compile these into a returned list of fragment objects.
     frags=[]
@@ -75,20 +76,39 @@ class LL_node():                 #node only for the purpose of implementing the 
     def attach(self, next_node):
         self.next = next_node
 
-"""
+
+def get_frag_sizes(frag_ls,min=1):
+    sizes = []
+    for frag in frag_ls:
+        if frag.size >= min:
+            sizes.append(frag.size)
+    return sizes
+
+
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
 
 nodes = parseNodes.parse_nodes("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt")
 parseNodes.populate_nodes(nodes, hedges)
-"""
 
-r = queue()
-r.enqueue("a")
-r.enqueue("b")
-r.enqueue("c")
-r.enqueue("d")
+frags = find_frags(nodes)
+frag_sizes = get_frag_sizes(frags)
+frag_sizes.sort()
 
-i = 0
-while i != 4:
-    print(r.dequeue())
-    i += 1
+
+non_t_frags = get_frag_sizes(frags,2)
+frags_atleast_3 = get_frag_sizes(frags,3)
+frags_atleast_4 = get_frag_sizes(frags,4)
+frags_atleast_5 = get_frag_sizes(frags,5)
+frags_atleast_5.sort()
+
+print("Total fragments: " + str(len(frags)))
+
+
+
+print("Fragments with size > 1: " + str(len(non_t_frags)))
+print("size at least 3: " + str(len(frags_atleast_3)))
+print("size at least 4: " + str(len(frags_atleast_4)))
+print("size at least 5: " + str(len(frags_atleast_5)))
+print("max frag size is " + str(frag_sizes[-1]))
+
+print("List of frag sizes above 5: \n" + str(frags_atleast_5))
