@@ -137,3 +137,9 @@ class LL_node():                 #node only for the purpose of implementing the 
 	
 	def give_next(self):
 		return self.next
+        
+        
+"""
+Graph connected via regulators? (put regulator in tail)
+count percentage of nodes in the big fragment, map back to hyperedges and count the percentage of hyperedges in the big fragment
+"""
