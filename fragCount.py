@@ -31,7 +31,14 @@ class fragment():               #a fragment object catalogues a single connected
     def __init__(self,nodes):
         self.node_ls = nodes
         self.size = len(nodes)
-        
+    
+    
+    def find_node_by_name(self, target_name):
+        for node in self.node_ls:
+            if node.name == target_name:
+                return node
+        print("No node with given name in this fragment")
+
 class queue():                  #queue only for the purpose of implementing BFS
     def __init__(self):
         self.head = None
@@ -85,6 +92,8 @@ def get_frag_sizes(frag_ls,min=1):
     return sizes
 
 
+
+
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
 
 nodes = parseNodes.parse_nodes("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt")
@@ -112,3 +121,5 @@ print("size at least 5: " + str(len(frags_atleast_5)))
 print("max frag size is " + str(frag_sizes[-1]))
 
 print("List of frag sizes above 5: \n" + str(frags_atleast_5))
+
+frags_atleast_5[-1].find_node_by_name("None")
