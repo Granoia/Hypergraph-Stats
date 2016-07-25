@@ -55,33 +55,36 @@ def populate_nodes(node_ls, hedge_ls, regulators = False):     #attaches the nod
                     h_node.adj_nodes.append(t_node)
         if regulators == True:
             for p in hedge.posReg:
-                p_node = binary_search_names(node_ls, p)
-                if p_node == None:
-                    weird_errors += 1
-                else:
-                    for h in hedge.head_ls:
-                        h_node = binary_search_names(node_ls, h)
-                        if h_node == None:
-                            print("Error in pReg h search!")
-                        else:
-                            p_node.pRegulates.append(h_node)
-                            p_node.adj_nodes.append(h_node)
-                            h_node.pRegulatedBy.append(p_node)
-                            h_node.adj_nodes.append(p_node)
+                if p != None:
+                    p_node = binary_search_names(node_ls, p)
+                    if p_node == None:
+                        weird_errors += 1
+                    else:
+                        for h in hedge.head_ls:
+                            h_node = binary_search_names(node_ls, h)
+                            if h_node == None:
+                                print("Error in pReg h search!")
+                            else:
+                                p_node.pRegulates.append(h_node)
+                                p_node.adj_nodes.append(h_node)
+                                h_node.pRegulatedBy.append(p_node)
+                                h_node.adj_nodes.append(p_node)
             for n in hedge.negReg:
-                n_node = binary_search_names(node_ls, n)
-                if n_node == None:
-                    weird_errors += 1
-                else:
-                    for h in hedge.head_ls:
-                        h_node = binary_search_names(node_ls, h)
-                        if h_node == None:
-                            print("Error in nReg h search!")
-                        else:
-                            n_node.nRegulates.append(h_node)
-                            n_node.adj_nodes.append(h_node)
-                            h_node.pRegulatedBy.append(n_node)
-                            h_node.adj_nodes.append(n_node)
+                if n != None:
+                    n_node = binary_search_names(node_ls, n)
+                    if n_node == None:
+                        weird_errors += 1
+                    else:
+                        for h in hedge.head_ls:
+                            h_node = binary_search_names(node_ls, h)
+                            if h_node == None:
+                                print("Error in nReg h search!")
+                            else:
+                                n_node.nRegulates.append(h_node)
+                                n_node.adj_nodes.append(h_node)
+                                h_node.pRegulatedBy.append(n_node)
+                                h_node.adj_nodes.append(n_node)
+>>>>>>> 8ff63b88e59bebae35f1f287d04f42c50f6db809
             
     print("that weird error happened " + str(weird_errors) + " times")
 
