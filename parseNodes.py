@@ -73,7 +73,7 @@ def populate_nodes(node_ls, hedge_ls, regulators = False):     #attaches the nod
                 if n_node == None:
                     weird_errors += 1
                 else:
-                    for h in hedge.head_ls
+                    for h in hedge.head_ls:
                         h_node = binary_search_names(node_ls, h)
                         if h_node == None:
                             print("Error in nReg h search!")
