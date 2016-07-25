@@ -88,7 +88,7 @@ def get_frag_sizes(frag_ls,min=1):
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
 
 nodes = parseNodes.parse_nodes("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt")
-parseNodes.populate_nodes(nodes, hedges)
+parseNodes.populate_nodes(nodes, hedges, True)
 
 frags = find_frags(nodes)
 frag_sizes = get_frag_sizes(frags)
