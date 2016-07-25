@@ -20,13 +20,17 @@ class node():                    #node objects for the graph G. they know who th
 		self.name = name
 		self.entrances = []
 		self.exits = []
+        self.pRegulates = []
+        self.pRegulatedBy = []
+        self.nRegulates = []
+        self.nRegulatedBy = []
 		self.adj_nodes = []
 		self.distance = -1
 		self.parent = None
 		self.in_frag = None
 	
 
-def populate_nodes(node_ls, hedge_ls):     #attaches the node objects together using a list of hedges (which can be obtained using a function in parseCount.py). In doing so converts the hypergraph back to a standard graph.
+def populate_nodes(node_ls, hedge_ls, regulators = False):     #attaches the node objects together using a list of hedges (which can be obtained using a function in parseCount.py). In doing so converts the hypergraph back to a standard graph.
 	weird_errors = 0
 	for hedge in hedge_ls:
 		for t in hedge.tail_ls:
@@ -49,6 +53,36 @@ def populate_nodes(node_ls, hedge_ls):     #attaches the node objects together u
 					t_node.adj_nodes.append(h_node)
 					h_node.entrances.append(t_node)
 					h_node.adj_nodes.append(t_node)
+        if regulators == True:
+            for p in hedge.posReg:
+                p_node = binary_search_names(node_ls, p)
+                if p_node == None:
+                    weird_errors += 1
+                else:
+                    for h in hedge.head_ls:
+                        h_node = binary_search_names(node_ls, h)
+                        if h_node == None:
+                            print("Error in pReg h search!")
+                        else:
+                            p_node.pRegulates.append(h_node)
+                            p_node.adj_nodes.append(h_node)
+                            h_node.pRegulatedBy.append(p_node)
+                            h_node.adj_nodes.append(p_node)
+            for n in hedge.negReg:
+                n_node = binary_search_names(node_ls, n)
+                if n_node == None:
+                    weird_errors += 1
+                else:
+                    for h in hedge.head_ls
+                        h_node = binary_search_names(node_ls, h)
+                        if h_node == None:
+                            print("Error in nReg h search!")
+                        else:
+                            n_node.nRegulates.append(h_node)
+                            n_node.adj_nodes.append(h_node)
+                            h_node.pRegulatedBy.append(n_node)
+                            h_node.adj_nodes.append(n_node)
+            
 	print("that weird error happened " + str(weird_errors) + " times")
 
 
