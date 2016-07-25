@@ -100,6 +100,7 @@ nodes = parseNodes.parse_nodes("/data/parsers/biopax-parsers/Reactome/combined-h
 parseNodes.populate_nodes(nodes, hedges, True)
 
 frags = find_frags(nodes)
+frags.sort(key = lambda n: n.size)
 frag_sizes = get_frag_sizes(frags)
 frag_sizes.sort()
 
@@ -122,4 +123,4 @@ print("max frag size is " + str(frag_sizes[-1]))
 
 print("List of frag sizes above 5: \n" + str(frags_atleast_5))
 
-frags_atleast_5[-1].find_node_by_name("None")
+frags[-1].find_node_by_name("None")
