@@ -84,7 +84,6 @@ def populate_nodes(node_ls, hedge_ls, regulators = False):     #attaches the nod
                                 n_node.adj_nodes.append(h_node)
                                 h_node.pRegulatedBy.append(n_node)
                                 h_node.adj_nodes.append(n_node)
->>>>>>> 8ff63b88e59bebae35f1f287d04f42c50f6db809
             
     print("that weird error happened " + str(weird_errors) + " times")
 
