@@ -44,15 +44,22 @@ class fragment():               #a fragment object catalogues a single connected
         frag_hedges = []     #will have duplicates filtered out
         for node in self.node_ls:
             all_hedges += node.hedges
+        all_hedges.sort(key = lambda h: h.ID)
         i = 0
         all_len = len(all_hedges)
-        singleton = all_hedges[0]
-        while i < all_len:
-            if all_hedges[i] != singleton:
-                frag_hedges.append(singleton)
-                singleton = all_hedges[i]
-            i += 1
+        if len(all_hedges) != 0:
+            singleton = all_hedges[0]
+            frag_hedges.append(singleton)
+            while i < all_len:
+                if all_hedges[i].ID != singleton.ID:
+                    singleton = all_hedges[i]
+                    frag_hedges.append(singleton)
+                i += 1
         return frag_hedges
+
+    def hedge_size(self):
+        frag_hedges = self.find_hedges()
+        return len(frag_hedges)
             
         
 
@@ -110,12 +117,25 @@ def get_frag_sizes(frag_ls,min=1):
 
 
 
+def frag_checksum(frag_ls):
+    total = 0
+    for frag in frag_ls:
+        total += frag.size
+    return total
+
+
+def hedge_checksum(frag_ls):
+    total = 0
+    for frag in frag_ls:
+        total += frag.hedge_size()
+    return total
+
 
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
 nodes = parseNodes.parse_nodes("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt")
 
 
-parseNodes.populate_nodes(nodes, hedges, True)
+parseNodes.populate_nodes(nodes, hedges, False)   #the boolean determines whether regulator connectivity is included. False means it's not, True means it is.
 
 frags = find_frags(nodes)
 frags.sort(key = lambda n: n.size)
@@ -149,3 +169,7 @@ print()
 
 print("Big frag has " + str(frags[-1].size) + " nodes out of " + str(len(nodes)) + " total nodes in file.")
 print("Big frag has " + str(len(frags[-1].find_hedges())) + " hedges out of " + str(len(hedges)) + " total hedges in file.")
+
+
+print("Checksum: In all of the fragments there are " + str(frag_checksum(frags)) + " nodes. There are a total of " + str(len(nodes)) + " nodes in the file.")
+print("Hedge Checksum: In all of the fragments there are " + str(hedge_checksum(frags)) + " hedges. There are a total of " + str(len(hedges)) + " hedges in the file.")
