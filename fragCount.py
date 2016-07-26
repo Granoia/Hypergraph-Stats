@@ -38,6 +38,23 @@ class fragment():               #a fragment object catalogues a single connected
             if node.name == target_name:
                 return node
         print("No node with given name in this fragment")
+    
+    def find_hedges(self):
+        all_hedges = []      #has duplicates
+        frag_hedges = []     #will have duplicates filtered out
+        for node in self.node_ls:
+            all_hedges += node.hedges
+        i = 0
+        all_len = len(all_hedges)
+        singleton = all_hedges[0]
+        while i < all_len:
+            if all_hedges[i] != singleton:
+                frag_hedges.append(singleton)
+                singleton = all_hedges[i]
+            i += 1
+        return frag_hedges
+            
+        
 
 class queue():                  #queue only for the purpose of implementing BFS
     def __init__(self):
@@ -95,8 +112,9 @@ def get_frag_sizes(frag_ls,min=1):
 
 
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
-
 nodes = parseNodes.parse_nodes("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt")
+
+
 parseNodes.populate_nodes(nodes, hedges, True)
 
 frags = find_frags(nodes)
@@ -124,3 +142,10 @@ print("max frag size is " + str(frag_sizes[-1]))
 print("List of frag sizes above 5: \n" + str(frags_atleast_5))
 
 frags[-1].find_node_by_name("None")
+
+
+print()
+print()
+
+print("Big frag has " + str(frags[-1].size) + " nodes out of " + str(len(nodes)) + " total nodes in file.")
+print("Big frag has " + str(len(frags[-1].find_hedges())) + " hedges out of " + str(len(hedges)) + " total hedges in file.")

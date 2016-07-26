@@ -25,6 +25,7 @@ class node():                    #node objects for the graph G. they know who th
         self.nRegulates = []
         self.nRegulatedBy = []
         self.adj_nodes = []
+        self.hedges = []
         self.distance = -1
         self.parent = None
         self.in_frag = None
@@ -49,8 +50,12 @@ def populate_help(node_ls, hedge_ls,curr_hedge, part):
                         head_node = binary_search_names(node_ls, h)
                         if head_node == None:
                             print("Error in second step of populate_help! Failed to look up " + h)
+                        tail_node.hedges.append(curr_hedge)
+                        head_node.hedges.append(curr_hedge)
+                        
                         tail_node.adj_nodes.append(head_node)
                         head_node.adj_nodes.append(tail_node)
+                        
 
                         if part == "tail_ls":
                             tail_node.exits.append(head_node)
