@@ -31,7 +31,7 @@ class node():                    #node objects for the graph G. they know who th
         self.in_frag = None
     
 
-def populate_help(node_ls, hedge_ls,curr_hedge, part):
+def populate_help(node_ls, hedge_ls,curr_hedge, part):       #helper function for populate_nodes()
     if part == "tail_ls":
         lookup = curr_hedge.tail_ls
     elif part == "posReg":
@@ -75,7 +75,7 @@ def populate_nodes(node_ls, hedge_ls, regulators = False):     #attaches the nod
             populate_help(node_ls, hedge_ls, hedge, "negReg")
 
 
-def binary_search_names(ls, target, start=0, end=None):
+def binary_search_names(ls, target, start=0, end=None):        #binary searches a list of nodes organized by name
     if end == None:
         end = len(ls)
 
@@ -91,6 +91,8 @@ def binary_search_names(ls, target, start=0, end=None):
 
 
 """
+OLD TESTING STUFF:
+
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
 
 nodes = parse_nodes(FILENAME)

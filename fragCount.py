@@ -39,7 +39,7 @@ class fragment():               #a fragment object catalogues a single connected
                 return node
         print("No node with given name in this fragment")
     
-    def find_hedges(self):
+    def find_hedges(self):         #gets a list of all hedges included in a fragment
         all_hedges = []      #has duplicates
         frag_hedges = []     #will have duplicates filtered out
         for node in self.node_ls:
@@ -57,7 +57,7 @@ class fragment():               #a fragment object catalogues a single connected
                 i += 1
         return frag_hedges
 
-    def hedge_size(self):
+    def hedge_size(self):         #finds the number of hedges in the fragment
         frag_hedges = self.find_hedges()
         return len(frag_hedges)
             
@@ -108,14 +108,14 @@ class LL_node():                 #node only for the purpose of implementing the 
         self.next = next_node
 
 
+        
+#these next three are just functions for looking at the data / sanity checking
 def get_frag_sizes(frag_ls,min=1):
     sizes = []
     for frag in frag_ls:
         if frag.size >= min:
             sizes.append(frag.size)
     return sizes
-
-
 
 def frag_checksum(frag_ls):
     total = 0
@@ -131,6 +131,8 @@ def hedge_checksum(frag_ls):
     return total
 
 
+    
+#data gathering and various tests. This should really be in a runfile instead but I haven't gotten around to making one.
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
 nodes = parseNodes.parse_nodes("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt")
 
