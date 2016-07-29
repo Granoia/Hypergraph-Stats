@@ -29,6 +29,8 @@ class node():                    #node objects for the graph G. they know who th
         self.distance = -1
         self.parent = None
         self.in_frag = None
+        self.index = None
+        self.lowlink = None    #index and lowlink are for Tarjan's algorithm, implemented in tarjan.py
     
 
 def populate_help(node_ls, hedge_ls,curr_hedge, part):       #helper function for populate_nodes()

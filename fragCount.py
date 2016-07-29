@@ -131,7 +131,7 @@ def hedge_checksum(frag_ls):
     return total
 
 
-    
+"""    
 #data gathering and various tests. This should really be in a runfile instead but I haven't gotten around to making one.
 hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
 nodes = parseNodes.parse_nodes("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt")
@@ -175,3 +175,4 @@ print("Big frag has " + str(len(frags[-1].find_hedges())) + " hedges out of " + 
 
 print("Checksum: In all of the fragments there are " + str(frag_checksum(frags)) + " nodes. There are a total of " + str(len(nodes)) + " nodes in the file.")
 print("Hedge Checksum: In all of the fragments there are " + str(hedge_checksum(frags)) + " hedges. There are a total of " + str(len(hedges)) + " hedges in the file.")
+"""
