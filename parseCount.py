@@ -1,7 +1,5 @@
 from gridObj import *
 
-FILENAME = "/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt"
-
 def parse_hedges(file):     #extracts data out of a text file and organizes it into a list of hedge objects which is returned
     hedges_ls = []      #list of hedge objects
     with open(file, 'r') as f:
@@ -40,15 +38,4 @@ def count_hedges(hedges, g):        #g is a grid object. This function counts up
             nR = 0
         else:
             nR = 1
-        g.grid_inc(curr_heads, curr_tails, pR, nR)      
-
-"""
-hedges = parse_hedges(FILENAME)
-g = grid()
-
-count_hedges(hedges, g)
-g.output_grid("output.txt")
-print
-print
-g.output_grid("output.txt",True)
-"""
+        g.grid_inc(curr_heads, curr_tails, pR, nR)

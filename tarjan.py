@@ -1,13 +1,13 @@
 from fragCount import LL_node
 from parseNodes import node
 
-def tarjan(nodes, notebook):
+def tarjan(nodes, notebook):             #tarjan's algorithm, finds the strongly connected components of a directed graph
     s = stack()
     for v in nodes:
         if v.index == None:
             strong_connect(v,notebook, s)
 
-def strong_connect(v, notebook, s):
+def strong_connect(v, notebook, s):      #helper function for tarjan()
     v.index = notebook.index
     v.lowlink = notebook.index
     notebook.index += 1
@@ -31,24 +31,55 @@ def strong_connect(v, notebook, s):
 
             
             
-class notebook():
+class notebook():                     #object that does some bookkeeping for tarjan() and also catalogues the data
     def __init__(self):
         self.index = 0
         self.entries = []
+        self.importantComponents = None
             
-    def newEntry(self):
+    def newEntry(self):               #bookkeeping function for tarjan()
         line = []
         self.entries.append(line)
     
-    def write(self, item):
+    def write(self, item):            #bookkeeping function for tarjan()
         if len(self.entries) != 0:
             self.entries[-1].append(item)
         else:
             print("Notebook error. There are no entries in the notebook. Use newEntry() first.")
             return -1
-            
+    
+    def extractImportantComponents(self):    #returns a list of the components with more than 1 node in them, i.e. the components for which 'strongly connected' is an interesting property
+        importantComponents = []
+        for entry in self.entries:
+            if len(entry) > 1:
+                importantComponents.append(entry)
+        self.importantComponents = importantComponents    #the method also updates the notebook object's importantComponents attribute, which is necessary for the following methods to run
+        return importantComponents
+        
+    def getSizeDistribution(self):
+        if self.importantComponents == None:
+            print("Notebook error! getSizeDistribution() cannot run because a list of important components has not yet been catalogued. Run extractImportantComponents() first.")
+            return -1
+        else:
+            sizes = []
+            for component in self.importantComponents:
+                sizes.append(len(component))
+            sizes.sort()
+            return sizes
+    
+    def countImportantNodes(self):
+        if self.importantComponents == None:
+            print("Notebook error! countImportantNodes() cannot run because a list of important components has not yet been catalogued. Run extractImportantComponents() first.")
+            return -1
+        else:
+            sizes = self.getSizeDistribution()
+            sum = 0
+            for n in sizes:
+                sum += n
+            return sum
 
-class stack():
+
+class stack():             #stack used for implementation of tarjan(), uses the LL_node class from fragCount.py
     def __init__(self):
         self.head = None
     
@@ -71,20 +102,7 @@ class stack():
             return None
 
 
-        
-
-"""       
-s = stack()
-print(s.pop())
-s.push(7)
-s.push(8)
-s.push(9)
-
-print(s.pop())
-print(s.pop())
-print(s.pop())
-print(s.pop())
-"""             
+"""            
 a = node('a')
 b = node('b')
 c = node('c')
@@ -116,3 +134,5 @@ def extract_data(notebook):
         print(entry_str)
         
 extract_data(n)
+
+"""

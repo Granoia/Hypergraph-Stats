@@ -65,7 +65,7 @@ class grid():
 		return grid_str
 
 
-	def output_grid(self, filename, p=False):
+	def output_grid(self, filename, p=False):       #saves str_grid to the given filename. If p is set to True it gives the numbers as percentages.
 		with open(filename, 'a') as f:
 			f.write(self.str_grid(p))
 

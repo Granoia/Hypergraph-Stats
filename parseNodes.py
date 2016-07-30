@@ -1,9 +1,6 @@
 import parseCount
 
 
-FILENAME = "/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hypernodes.txt"
-
-
 
 def parse_nodes(filename):      #extracts information from the list of hypernodes and puts them into node objects. Right now it only actually uses the names of the nodes.
     node_ls = []
@@ -92,48 +89,4 @@ def binary_search_names(ls, target, start=0, end=None):        #binary searches 
         return binary_search_names(ls, target, start, mid)
 
 
-"""
-OLD TESTING STUFF:
 
-hedges = parseCount.parse_hedges("/data/parsers/biopax-parsers/Reactome/combined-hypergraph/all-hyperedges.txt")
-
-nodes = parse_nodes(FILENAME)
-populate_nodes(nodes, hedges)
-
-print("total nodes: " + str(len(nodes)))
-
-def count_disconnected(nodes):
-    i = 0
-    for n in nodes:
-        if n.adj_nodes == []:
-            i += 1
-    return i
-
-print("nodes with no edges: " + str(count_disconnected(nodes)))
-"""
-
-
-"""
-test = []
-
-test.append(node("b"))
-test.append(node("d"))
-test.append(node("a"))
-test.append(node("c"))
-test.append(node("z"))
-
-def print_test(ls):
-        str = ""
-        for n in ls:
-                str += n.name + " "
-        print(str)
-        print
-
-print_test(test)
-
-test.sort(key = lambda n: n.name)
-
-print_test(test)
-
-print(binary_search_names(test, "b").name)
-"""
