@@ -2,6 +2,10 @@
 A small project with the purpose of obtaining and cataloging statistics from biological interactomes that have been converted into hypergraphs.
 
 
-Uncomment the stuff at the bottom of parseCount.py and run it on any of the bioinf machines to get a display about hyperedges.
+use the runfile (python3 runStats.py) on one of the bioinf computers to get statistics about a reactome's connectivity and about what sorts of hyperedges it contains.
 
-Run (python3) fragCount.py on any of the bioinf machines to get a (rough) display about connectivity.
+The comments of the runfile give a good summary of what they do, but I'll list the contents here:
+block 0: initialization
+block 1: hedge stats grid
+block 2: weakly connected components of the whole reactome
+block 3: strongly connected components of the biggest fragment in the reactome
