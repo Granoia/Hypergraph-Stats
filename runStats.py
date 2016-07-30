@@ -125,7 +125,7 @@ print()
 print()
 print("##############")
 print("BLOCK 2 OUTPUT")
-print("##############"
+print("##############")
 print()
 
 print("Total fragments: " + str(len(frags)))
